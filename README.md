@@ -5,13 +5,6 @@ The application has several core functionalities, including the ability to creat
 
 Exhibition owners can use the web application to create and manage exhibitions, and allocate stalls to exhibitors. Exhibitors, in turn, can use this application to select and purchase their preferred stall tier, customize their virtual stalls with branding and marketing materials, and interact with attendees in real-time through live streaming. Attendees can create and customize their own avatars, and buy tickets with the web application.  
 
-
-
-
-https://github.com/hanzjk/Virtual-Exhibition-Web-Application/assets/65526190/b6211f7f-0fc3-4483-af34-0aab7a6e873c
-
-
-
 Overall, the web application is an essential tool for managing virtual exhibitions on the Nerambum platform, providing a seamless and immersive experience for all stakeholders involved.
 # Architecture
 The architecture of the application is depicted in the following figure.
@@ -47,7 +40,10 @@ Include the configurations in API gateway.
 # User Interface
 The front-end user interface of the Nerambum web application was developed using React.
 
-<video src='DS-VIDEO1.mp4' ></video>
+
+https://github.com/hanzjk/Virtual-Exhibition-Web-Application/assets/65526190/74197171-6d7d-46b4-9225-aac376468446
+
+
 
 **How you used the API testing tools
 
