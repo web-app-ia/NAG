@@ -14,11 +14,12 @@ The architecture of the application is depicted in the following figure.
 </p>
 
 **Design decisions taken to split into services**
-Services were split depending on the fact that each service should focus on a specific functionality while ensuring a clear separation of concerns.
+Services were split depending on the fact that each service should focus on a specific functionality of the application while ensuring a clear separation of concerns.
 
 
 # Micro-services
-**The implementation methods used (Netflix software stack)
+* Netflix Eureka Server was used as the discover server
+* Spring Cloud Gateway was used to implement the API Gateway
 
 ## Core services
 Our system consists of 9 core services, each with its own database.  
@@ -32,8 +33,8 @@ Our system consists of 9 core services, each with its own database.
 * Feedback Service - Collects and retrieves user feedback.  
 * Stats Service -  Handles attendance statistics, providing exhibition owners with an overview of their exhibition. 
 
+**Following is the REST API endpoints exposed by microservices**
 
-**The REST API exposed by the microservice**
 Auth Service
 * GET /api/auth/validate/{token}
 * GET /api/auth/getAdmin/{emailAddress}
@@ -132,7 +133,7 @@ Stats Service
 * Services can be added or removed dynamically without requiring changes to the configuration of other services.
  The figure illustrates the instances that are registered in the discovery server and are currently up in status. Here each service acts as a discovery client.
 <p align="center">
-  <img src="ds.png" width="650" >
+  <img src="ds.jpg" width="650" >
 </p>
 
 ## API Gateway
@@ -151,9 +152,6 @@ The front-end user interface of the Nerambum web application was developed using
 https://github.com/hanzjk/Virtual-Exhibition-Web-Application/assets/65526190/74197171-6d7d-46b4-9225-aac376468446
 
 
-
-**How you used the API testing tools**
-
 Postman was used to test all the implemented APIs.
 <p align="center">
   <img src="postman.png" width="650" >
@@ -164,6 +162,9 @@ All the services are deployed in docker using docker-compose. Thus, each service
 <p align="center">
   <img src="Docker Dep.png" width="650" >
 </p>
+
 # References
-[1] W. by: baeldung, “Introduction to spring cloud netflix - eureka,” Baeldung, https://www.baeldung.com/spring-cloud-netflix-eureka#:~:text=Client%2Dside%20service%20discovery%20allows,each%20service%20has%20to%20register. (accessed May 27, 2023). 
+
+[1] W. by: baeldung, “Introduction to spring cloud netflix - eureka,” Baeldung, https://www.baeldung.com/spring-cloud-netflix-eureka#:~:text=Client%2Dside%20service%20discovery%20allows,each%20service%20has%20to%20register.
+
 [2] https://tanzu.vmware.com/developer/guides/scg-what-is/#:~:text=Spring%20Cloud%20Gateway%20provides%20a,security%2C%20resiliency%2C%20and%20monitoring. 
