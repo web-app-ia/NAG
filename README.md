@@ -33,9 +33,17 @@ Our system consists of 9 core services, each with its own database.
 **The REST API exposed by the microservice
 
 **Inter-service interactions happened via the micro-service
+* Exhibition service and Auth service to fetch exhibition owner details when fetching an exhibition.
+* Payment service and Auth service to fetch paid users' details when fetching one payment detail.
+* Ticket service and Auth service to fetch users' details when fetching a ticket.
+* Feedback service and Exhibition service to fetch exhibition details when fetching a feedback regarding an exhibition.
+
 ## Discovery Server
 ## API Gateway
-Include the configurations in API gateway.
+* Configured on port 8080.
+* Added jwt authentication and token validity time.
+* 
+
 
 # User Interface
 The front-end user interface of the Nerambum web application was developed using React.
@@ -47,7 +55,11 @@ https://github.com/hanzjk/Virtual-Exhibition-Web-Application/assets/65526190/741
 
 **How you used the API testing tools
 
-# Deployment
-**Suggest a method to deploy the system to use in production.
+Postman was used to test all the implemented APIs.
 
+# Deployment
+All the services are deployed in docker using docker-compose. Thus, each service contains a container which pushed to the docker hub.
+<p align="center">
+  <img src="Docker-Dep.png" width="650" >
+</p>
 # References
