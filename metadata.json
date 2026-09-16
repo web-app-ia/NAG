@@ -1,0 +1,11 @@
+{
+  "name": "Virtual Exhibition Platform",
+  "description": "Virtual Exhibition Web Application featuring customizable 3D stalls, 3D avatar customizer, exhibition management, attendee ticketing, and live streaming",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
