@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 
@@ -25,6 +25,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss";
 import "./assets/css/demo.css";
+import "./assets/css/modern-menus.css";
+import "./assets/css/dark-mode.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Global axios configuration to intercept localhost:8080 and route to the local server
@@ -35,6 +37,15 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+// Same rewrite for raw fetch() calls used across the views
+const originalFetch = window.fetch.bind(window);
+window.fetch = (input, init) => {
+  if (typeof input === "string" && input.includes("localhost:8080")) {
+    input = input.replace(/http:\/\/localhost:8080/g, "");
+  }
+  return originalFetch(input, init);
+};
+
 // Set default auth role if not present to enable smooth exploration
 if (!localStorage.getItem("userRole")) {
   localStorage.setItem("userRole", "ADMIN");
@@ -44,28 +55,37 @@ if (!localStorage.getItem("userRole")) {
 }
 
 import AdminLayout from "layouts/Admin.js";
-import CustomizeStall from "views/CustomizeStall";
-import CustomizeAvatar from "views/CustomizeAvatar";
-import StallsSelect from "views/StallsSelect";
-import Payments from "views/Payments";
 import Landing from "layouts/Landing";
 import Login from "views/Login";
 import RegisterAttendee from "views/RegisterAttendee";
 import RegisterOwner from "views/RegisterOwner";
 import RegisterAdmin from "views/RegisterAdmin";
 import RegisterExhibitor from "views/RegisterExhibitor";
-import GetExhibitions from "components/Exhibitions/GetExhibitions";
-import LiveStream from "views/liveStream";
-import AddExhibition from "views/AddExhibition";
-import EditExhibition from "views/EditExhibition";
 import Test from "views/Test";
-import SubmitFeedback from "views/SubmitFeedback";
+
+// Vues lourdes (3D / streaming / paiement) chargees a la demande (code-splitting).
+const CustomizeStall = React.lazy(() => import("views/CustomizeStall"));
+const CustomizeAvatar = React.lazy(() => import("views/CustomizeAvatar"));
+const StallsSelect = React.lazy(() => import("views/StallsSelect"));
+const Payments = React.lazy(() => import("views/Payments"));
+const GetExhibitions = React.lazy(() =>
+  import("components/Exhibitions/GetExhibitions")
+);
+const LiveStream = React.lazy(() => import("views/liveStream"));
+const VisitExhibition = React.lazy(() => import("views/VisitExhibition"));
+const AddExhibition = React.lazy(() => import("views/AddExhibition"));
+const EditExhibition = React.lazy(() => import("views/EditExhibition"));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
-    <Switch>
+    <Suspense
+      fallback={
+        <div style={{ padding: "3rem", textAlign: "center" }}>Chargement…</div>
+      }
+    >
+      <Switch>
       <Route exact path="/home" component={Landing} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/registerAttendee" component={RegisterAttendee} />
@@ -108,6 +128,11 @@ root.render(
         render={(props) => <LiveStream {...props} />}
       />
 
+      <Route
+        path="/visit-exhibition"
+        render={(props) => <VisitExhibition {...props} />}
+      />
+
       <Route path="/addExhibition" render={(props)=> <AddExhibition {...props}/>}/>
       <Route path="/test" render={(props)=> <Test {...props}/>}/>
 
@@ -115,6 +140,7 @@ root.render(
       {/* <Route path="/submitFeedback" render={(props)=><SubmitFeedback {...props}/>}/> */}
 
       <Redirect from="/" to="/home" />
-    </Switch>
+      </Switch>
+    </Suspense>
   </BrowserRouter>
 );

@@ -26,12 +26,21 @@ import Notifications from "views/Notifications.js";
 import Upgrade from "views/Upgrade.js";
 import Test from "views/Test.js";
 import { Attendee } from "components/Register/Attendee";
-import CustomizeAvatar from "views/CustomizeAvatar";
-import GetExhibitions from "components/Exhibitions/GetExhibitions";
+// Vues lourdes chargees a la demande (code-splitting).
+const CustomizeAvatar = React.lazy(() => import("views/CustomizeAvatar"));
+const GetExhibitions = React.lazy(() =>
+  import("components/Exhibitions/GetExhibitions")
+);
 import RegisterAdmin from "views/RegisterAdmin";
-import StallsSelect from "views/StallsSelect";
-import CustomizeStall from "views/CustomizeStall";
-import LiveStream from "views/liveStream";
+const StallsSelect = React.lazy(() => import("views/StallsSelect"));
+const CustomizeStall = React.lazy(() => import("views/CustomizeStall"));
+const LiveStream = React.lazy(() => import("views/liveStream"));
+// Stat importe chart.js + react-chartjs-2 : charge a la demande.
+const Stat = React.lazy(() => import("views/Stat"));
+// Editeur de hall (conception de l'espace) : charge a la demande.
+const HallBuilder = React.lazy(() => import("components/ExhibitionMap/HallBuilder"));
+const UserManager = React.lazy(() => import("views/UserManager"));
+const AgendaAdmin = React.lazy(() => import("views/AgendaAdmin"));
 import AddExhibition from "views/AddExhibition";
 import ApproveExhibitors from 'views/ApproveExhibitors';
 import SubmitFeedback from 'views/SubmitFeedback';
@@ -39,8 +48,8 @@ import ViewFeedbacks from 'views/ViewFeedbacks';
 import ViewMaterials from 'views/ViewMaterials';
 import PlattformFB from 'views/PlattformFB';
 import Approve from 'views/Approve';
-import Stat from 'views/Stat';
 import StartExhibitions from 'views/StartExhibitions';
+const VisitExhibition = React.lazy(() => import("views/VisitExhibition"));
 
 export function getDashboardRoutes() {
   const currentRole = localStorage.getItem("userRole");
@@ -52,6 +61,27 @@ export function getDashboardRoutes() {
           name: "User Profile",
           icon: "nc-icon nc-circle-09",
           component: UserProfile,
+          layout: "/admin"
+        },
+        {
+          path: '/hallBuilder',
+          name: "Hall Builder",
+          icon: "nc-icon nc-ruler-pencil",
+          component: HallBuilder,
+          layout: "/admin"
+        },
+        {
+          path: "/users",
+          name: "Community Management",
+          icon: "nc-icon nc-single-02",
+          component: UserManager,
+          layout: "/admin"
+        },
+        {
+          path: "/agenda",
+          name: "Conference Agenda",
+          icon: "nc-icon nc-calendar-60",
+          component: AgendaAdmin,
           layout: "/admin"
         },
         {
@@ -83,6 +113,13 @@ export function getDashboardRoutes() {
           layout: "/admin"
         },
         {
+          path: '/visit-exhibition',
+          name: "Visit Exhibition",
+          icon: "nc-icon nc-planet",
+          component: VisitExhibition,
+          layout: ""
+        },
+        {
           path: '/approve',
           name: "Approve Exhibitions",
           icon: "nc-icon nc-check-2",
@@ -108,6 +145,20 @@ export function getDashboardRoutes() {
           layout: "/admin"
         },
         {
+          path: "/users",
+          name: "Community Management",
+          icon: "nc-icon nc-single-02",
+          component: UserManager,
+          layout: "/admin"
+        },
+        {
+          path: "/agenda",
+          name: "Conference Agenda",
+          icon: "nc-icon nc-calendar-60",
+          component: AgendaAdmin,
+          layout: "/admin"
+        },
+        {
           path: "/startExhibitions",
           name: "Start / Stop Exhibitions",
           icon: "nc-icon nc-button-play",
@@ -127,6 +178,13 @@ export function getDashboardRoutes() {
           icon: "nc-icon nc-tv-2",
           component: GetExhibitions,
           layout: "/admin"
+        },
+        {
+          path: '/visit-exhibition',
+          name: "Visit Exhibition",
+          icon: "nc-icon nc-planet",
+          component: VisitExhibition,
+          layout: ""
         },
         {
           path: "/addExhibition",

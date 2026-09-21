@@ -5,6 +5,7 @@ import axios from "axios";
 export default function StartExhibitions({ data }) {
   const [exhibitions, setExhibitions] = useState(data || []);
   const [loading, setLoading] = useState(!data);
+  const [actionError, setActionError] = useState("");
 
   const fetchExhibitions = () => {
     axios
@@ -32,6 +33,7 @@ export default function StartExhibitions({ data }) {
   }, [data]);
 
   function handleStart(id) {
+    setActionError("");
     axios
       .put(`http://localhost:8080/api/exhibitions/${id}/start?start=true`, {}, {
         headers: {
@@ -40,10 +42,15 @@ export default function StartExhibitions({ data }) {
       })
       .then(() => {
         fetchExhibitions();
+      })
+      .catch((err) => {
+        console.error(err);
+        setActionError("Failed to start exhibition — server did not confirm. Status unchanged.");
       });
   }
 
   function handleEnd(id) {
+    setActionError("");
     axios
       .put(`http://localhost:8080/api/exhibitions/${id}/start?start=false`, {}, {
         headers: {
@@ -52,6 +59,10 @@ export default function StartExhibitions({ data }) {
       })
       .then(() => {
         fetchExhibitions();
+      })
+      .catch((err) => {
+        console.error(err);
+        setActionError("Failed to stop exhibition — server did not confirm. Status unchanged.");
       });
   }
 
@@ -67,6 +78,11 @@ export default function StartExhibitions({ data }) {
               </p>
             </Card.Header>
             <Card.Body>
+              {actionError && (
+                <div className="alert alert-danger" role="alert">
+                  {actionError}
+                </div>
+              )}
               {loading ? (
                 <div className="text-center py-4">Loading exhibitions...</div>
               ) : exhibitions.length === 0 ? (

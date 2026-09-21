@@ -21,12 +21,9 @@ export default function Login() {
       document.documentElement.className.indexOf("nav-open") !== -1
     ) {
       document.documentElement.classList.toggle("nav-open");
-      var element = document.getElementById("bodyClick");
+      let element = document.getElementById("bodyClick");
       element.parentNode.removeChild(element);
     }
-    console.log(localStorage.getItem("jwt"))
-    console.log(localStorage.getItem("userRole"))
-    console.log(localStorage.getItem("userLoggedIn"))
   });
   return (
     <>
@@ -71,7 +68,6 @@ const LoginForm = () => {
       password: password,
     })
       .then(async (res) => {
-        console.log(res.data);
         if (res.data.userRole === "null") {
           setNotification(res.data.token);
         } else {
@@ -85,7 +81,6 @@ const LoginForm = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
       });
   }
 

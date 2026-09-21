@@ -1,0 +1,4 @@
+
+> virtual-exhibition-web-app@1.0.0 dev
+> tsx server.ts # http://localhost:3000 - Exhibition
+

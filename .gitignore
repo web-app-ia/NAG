@@ -28,8 +28,18 @@ build/
 
 node_modules/
 
+# Dossiers temporaires de compression d'images (a supprimer manuellement)
+_imgout/
+_imgtest/
+
 ### service accounts ###
 /services/stall/src/main/resources/serviceAccountKey.json
 /services/auth/src/main/resources/serviceAccountKey.json
 /services/ticket/src/main/resources/serviceAccountKey.json
 /services/exhibition/src/main/resources/serviceAccountKey.json
+
+# Vite temp
+vite.config.ts.timestamp-*.mjs
+dev-server.log
+test-out.txt
+
